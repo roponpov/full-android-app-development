@@ -1,4 +1,4 @@
-package kh.roponpov.fullandroidappdevelopment.features.splash.view
+package kh.roponpov.fullandroidappdevelopment.features.splash.views
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -37,11 +37,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import kh.roponpov.fullandroidappdevelopment.R
-import kh.roponpov.fullandroidappdevelopment.features.splash.view.sections.ProgressBarIndicatorSection
+import kh.roponpov.fullandroidappdevelopment.core.navigation.Destinations
+import kh.roponpov.fullandroidappdevelopment.features.splash.views.sections.ProgressBarIndicatorSection
 
 @Composable
-fun SplashView() {
+fun SplashView(navController: NavController) {
     //////////////////////////////
     //// VARIABLE DECLARATION ////
     //////////////////////////////
@@ -139,7 +142,21 @@ fun SplashView() {
             //////////////////////////////
             //// PROGRESS BAR SECTION ////
             //////////////////////////////
-            ProgressBarIndicatorSection()
+            ProgressBarIndicatorSection(
+                onFinished = {
+                    val isLoggedIn = false //// TODO : Change Logic
+
+                    if (isLoggedIn) {
+                        navController.navigate(Destinations.Dashboard.route) {
+                            popUpTo(Destinations.Splash.route) { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate(Destinations.Login.route) {
+                            popUpTo(Destinations.Splash.route) { inclusive = true }
+                        }
+                    }
+                }
+            )
         }
 
         ////////////////////////////////////
@@ -174,6 +191,6 @@ fun SplashView() {
 @Composable
 fun PreviewSplash() {
     MaterialTheme {
-        SplashView()
+        SplashView(rememberNavController())
     }
 }

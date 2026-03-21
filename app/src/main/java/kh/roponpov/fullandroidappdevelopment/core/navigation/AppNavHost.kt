@@ -1,11 +1,11 @@
 package kh.roponpov.fullandroidappdevelopment.core.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kh.roponpov.fullandroidappdevelopment.features.splash.view.SplashView
+import kh.roponpov.fullandroidappdevelopment.features.login.views.LoginView
+import kh.roponpov.fullandroidappdevelopment.features.splash.views.SplashView
 
 @Composable
 fun AppNavHost() {
@@ -16,7 +16,11 @@ fun AppNavHost() {
         startDestination = Destinations.Splash.route,
     ) {
         composable(Destinations.Splash.route) {
-            SplashView()
+            SplashView(navController)
+        }
+
+        composable(Destinations.Login.route) {
+            LoginView(navController)
         }
     }
 }

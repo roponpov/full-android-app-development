@@ -1,6 +1,5 @@
-package kh.roponpov.fullandroidappdevelopment.features.splash.view.sections
+package kh.roponpov.fullandroidappdevelopment.features.splash.views.sections
 
-import android.content.res.Configuration
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -37,14 +36,12 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kh.roponpov.fullandroidappdevelopment.R
-import kh.roponpov.fullandroidappdevelopment.features.splash.view.SplashView
 import kotlinx.coroutines.delay
 
 @Composable
-fun ProgressBarIndicatorSection() {
+fun ProgressBarIndicatorSection(onFinished: () -> Unit) {
     //////////////////////////////
     //// VARIABLE DECLARATION ////
     //////////////////////////////
@@ -66,6 +63,10 @@ fun ProgressBarIndicatorSection() {
                 percent >= 50 -> "Jetpack Compose"
                 percent >= 10 -> "Initializing Material 3"
                 else -> "Checking Internet"
+            }
+
+            if (progress >= 1f) {
+                onFinished()
             }
         }
     }
@@ -131,6 +132,6 @@ fun ProgressBarIndicatorSection() {
 suspend fun loadProgress(updateProgress: (Float) -> Unit) {
     for (i in 1..100) {
         updateProgress(i.toFloat() / 100)
-        delay(50)
+        delay(10)
     }
 }
