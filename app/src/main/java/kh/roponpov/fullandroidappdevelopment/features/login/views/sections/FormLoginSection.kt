@@ -1,7 +1,5 @@
 package kh.roponpov.fullandroidappdevelopment.features.login.views.sections
 
-import android.widget.RadioButton
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,16 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,12 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+//import kh.roponpov.fullandroidappdevelopment.core.navigation.Destinations
 import kh.roponpov.fullandroidappdevelopment.core.ui.components.AppTextField
 import kh.roponpov.fullandroidappdevelopment.features.login.views.LoginView
 
 @Composable
-fun FormLoginSection() {
+fun FormLoginSection(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -98,7 +94,11 @@ fun FormLoginSection() {
             ),
             shape = RoundedCornerShape(12.dp),
             contentPadding = PaddingValues(vertical = 14.dp),
-            onClick = {}
+            onClick = {
+//                navController.navigate(Destinations.Dashboard.route) {
+//                    popUpTo(Destinations.Login.route) { inclusive = true }
+//                }
+            }
         ) {
             Row (
                 verticalAlignment = Alignment.CenterVertically,
@@ -118,8 +118,6 @@ fun FormLoginSection() {
                 )
             }
         }
-
-
     }
 }
 

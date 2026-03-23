@@ -31,7 +31,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kh.roponpov.fullandroidappdevelopment.R
 import kh.roponpov.fullandroidappdevelopment.core.ui.components.AppOrDivider
-import kh.roponpov.fullandroidappdevelopment.core.ui.components.AppTextField
 import kh.roponpov.fullandroidappdevelopment.features.login.views.sections.FormLoginSection
 import kh.roponpov.fullandroidappdevelopment.features.login.views.sections.WelcomeSection
 
@@ -111,7 +110,7 @@ fun LoginView(navController: NavController) {
         ////////////////////////////
         //// FORM LOGIN SECTION ////
         ////////////////////////////
-        FormLoginSection()
+        FormLoginSection(navController)
 
         //////////////////////////////
         //// OR JOIN WITH SECTION ////

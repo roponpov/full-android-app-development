@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kh.roponpov.fullandroidappdevelopment.R
-import kh.roponpov.fullandroidappdevelopment.core.navigation.Destinations
+//import kh.roponpov.fullandroidappdevelopment.core.navigation.Destinations
 import kh.roponpov.fullandroidappdevelopment.features.splash.views.sections.ProgressBarIndicatorSection
 
 @Composable
@@ -146,15 +146,15 @@ fun SplashView(navController: NavController) {
                 onFinished = {
                     val isLoggedIn = false //// TODO : Change Logic
 
-                    if (isLoggedIn) {
-                        navController.navigate(Destinations.Dashboard.route) {
-                            popUpTo(Destinations.Splash.route) { inclusive = true }
-                        }
-                    } else {
-                        navController.navigate(Destinations.Login.route) {
-                            popUpTo(Destinations.Splash.route) { inclusive = true }
-                        }
-                    }
+//                    if (isLoggedIn) {
+//                        navController.navigate(Destinations.Dashboard.route) {
+//                            popUpTo(Destinations.Splash.route) { inclusive = true }
+//                        }
+//                    } else {
+//                        navController.navigate(Destinations.Login.route) {
+//                            popUpTo(Destinations.Splash.route) { inclusive = true }
+//                        }
+//                    }
                 }
             )
         }
