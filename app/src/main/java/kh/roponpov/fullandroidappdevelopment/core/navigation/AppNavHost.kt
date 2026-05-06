@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import kh.roponpov.fullandroidappdevelopment.features.dashboard.navigation.dashboardGraphNavigation
+import kh.roponpov.fullandroidappdevelopment.features.profile.navigation.profileGraphNavigation
+import kh.roponpov.fullandroidappdevelopment.features.search.navigation.searchGraphNavigation
 
 @Composable
 fun AppNavHost(
@@ -18,7 +20,7 @@ fun AppNavHost(
         modifier = modifier
     ) {
         dashboardGraphNavigation(navigator)
-//        searchGraph()
-//        profileGraph()
+        searchGraphNavigation(navigator)
+        profileGraphNavigation(navigator)
     }
 }
