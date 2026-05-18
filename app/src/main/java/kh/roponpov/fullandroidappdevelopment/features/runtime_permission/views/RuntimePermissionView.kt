@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kh.roponpov.fullandroidappdevelopment.R
-import kh.roponpov.fullandroidappdevelopment.features.dashboard.views.DashboardView
+import kh.roponpov.fullandroidappdevelopment.features.runtime_permission.models.RuntimePermissionModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,8 +75,13 @@ fun RuntimePermissionsView() {
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                items(50) {
-                    OutlinedCard() {
+                val runtimePermissions = RuntimePermissionModel.runtimePermissions
+                val permissionLength: Int = runtimePermissions.count()
+
+                items(permissionLength) { index ->
+                    val permission = runtimePermissions[index]
+
+                    OutlinedCard {
                         Column(
                             modifier = Modifier
                                 .padding(16.dp)
@@ -87,7 +92,7 @@ fun RuntimePermissionsView() {
                             ) {
                                 Icon(
                                     modifier = Modifier.size(35.dp),
-                                    painter = painterResource(R.drawable.ic_security),
+                                    painter = painterResource(permission.iconRes),
                                     tint = MaterialTheme.colorScheme.primary,
                                     contentDescription = "Android Icon",
                                 )
@@ -100,7 +105,7 @@ fun RuntimePermissionsView() {
                             }
 
                             Text(
-                                text = "Permission Name ${it+1}",
+                                text = permission.title,
                                 maxLines = 1,
                                 style = MaterialTheme.typography.titleMedium,
                             )
