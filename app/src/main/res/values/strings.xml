@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Full Android App Development</string>
+    <string name="android_jetpack_compose">Android Jetpack Compose</string>
+    <string name="runtime_permissions">Runtime Permission</string>
+    <string name="runtime_permissions_description">Handle runtime permissions in Jetpack Compose to request and manage user access for features like camera, storage, and location. Ensure a smooth and secure user experience with proper permission handling.</string>
 </resources>

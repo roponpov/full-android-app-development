@@ -1,23 +1,16 @@
 package kh.roponpov.fullandroidappdevelopment.features.dashboard.views
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -25,18 +18,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kh.roponpov.fullandroidappdevelopment.R
+import kh.roponpov.fullandroidappdevelopment.features.dashboard.components.FeatureCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardView(
-    onNavigateDetail: () -> Unit,
+    onNavigateDetail: (route: String) -> Unit,
 ) {
     Scaffold(
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets.safeDrawing,
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
@@ -56,11 +51,10 @@ fun DashboardView(
                             contentDescription = "Android Icon",
                         )
                         Text(
-                            text = "Android Jetpack Compose",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                            text = stringResource(R.string.android_jetpack_compose),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -68,72 +62,27 @@ fun DashboardView(
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
         ) {
-            OutlinedCard(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                border = BorderStroke(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.primary,
-                ),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                ),
-            ) {
-                Column (
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ){
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    shape = RoundedCornerShape(16.dp),
-                                    color = MaterialTheme.colorScheme.primary.copy(
-                                        alpha = 0.2f,
-                                    ),
-                                )
-                                .padding(16.dp),
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_sync),
-                                tint = MaterialTheme.colorScheme.primary,
-                                contentDescription = "Android Icon",
-                            )
-                        }
-                        Icon(
-                            painter = painterResource(R.drawable.ic_round_arrow_forward_ios),
-                            tint = MaterialTheme.colorScheme.primary,
-                            contentDescription = "Android Icon",
-                        )
-
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = "Runtime Permissions",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    Text(
-                        text = "Handle runtime permissions in Jetpack Compose to request and manage user access for features like camera, storage, and location. Ensure a smooth and secure user experience with proper permission handling.",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
+            FeatureCard(
+                title = stringResource(R.string.runtime_permissions),
+                description = stringResource(R.string.runtime_permissions_description),
+                iconRes = R.drawable.ic_sync,
+                onClick = { onNavigateDetail("runtime_permissions") },
+            )
         }
     }
 }
-@Preview
+
+@Preview(showBackground = true)
 @Composable
-fun DashboardPreview() {
-    DashboardView(onNavigateDetail = {})
+private fun DashboardScreenPreview() {
+    MaterialTheme {
+        DashboardView(
+            onNavigateDetail = {},
+        )
+    }
 }

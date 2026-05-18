@@ -17,10 +17,13 @@ fun NavGraphBuilder.dashboardGraphNavigation(
 
         composable("dashboard") {
             DashboardView(
-                onNavigateDetail = {
-                    navigator.navigateTo("dashboard_detail")
+                onNavigateDetail = { route ->
+                    navigator.navigateTo(route)
                 }
             )
+        }
+        composable("runtime_permission") {
+//            DashboardView()
         }
 
 //        composable("home_detail") {
