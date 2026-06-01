@@ -3,8 +3,10 @@ package kh.roponpov.fullandroidappdevelopment.features.dashboard.views
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -71,7 +73,16 @@ fun DashboardView(
                 title = stringResource(R.string.runtime_permissions),
                 description = stringResource(R.string.runtime_permissions_description),
                 iconRes = R.drawable.ic_sync,
-                onClick = { onNavigateDetail("runtime_permissions") },
+                onClick = { onNavigateDetail("runtime_permission") },
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            FeatureCard(
+                title = stringResource(R.string.aba_dashboard),
+                description = stringResource(R.string.aba_dashboard_description),
+                iconRes = R.drawable.ic_account_banking,
+                onClick = { onNavigateDetail("mobile_banking") },
             )
         }
     }

@@ -4,8 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import kh.roponpov.fullandroidappdevelopment.core.navigation.AppNavigator
-import kh.roponpov.fullandroidappdevelopment.core.navigation.BottomTab
 import kh.roponpov.fullandroidappdevelopment.features.dashboard.views.DashboardView
+import kh.roponpov.fullandroidappdevelopment.features.aba_dashboard.views.ABADashboardView
+import kh.roponpov.fullandroidappdevelopment.features.runtime_permission.views.RuntimePermissionsView
 
 fun NavGraphBuilder.dashboardGraphNavigation(
     navigator: AppNavigator
@@ -23,7 +24,14 @@ fun NavGraphBuilder.dashboardGraphNavigation(
             )
         }
         composable("runtime_permission") {
-//            DashboardView()
+            RuntimePermissionsView(
+                navigator = navigator
+            )
+        }
+        composable("mobile_banking") {
+            ABADashboardView(
+                navigator = navigator
+            )
         }
 
 //        composable("home_detail") {

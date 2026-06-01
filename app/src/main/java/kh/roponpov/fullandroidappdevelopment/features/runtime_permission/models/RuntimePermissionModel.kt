@@ -1,133 +1,193 @@
 package kh.roponpov.fullandroidappdevelopment.features.runtime_permission.models
 
+import android.Manifest
 import kh.roponpov.fullandroidappdevelopment.R
 
 class RuntimePermissionModel(
-    val title: String,
-    val description: String,
-    val iconRes: Int,
+    val id: Int,
+    val groupPermissionTitle: String,
+    val permissions: List<PermissionModel>,
 ) {
+
     companion object {
-        val runtimePermissions = listOf<RuntimePermissionModel>(
+        val runtimePermissions = listOf(
+
+            // Location Permissions
             RuntimePermissionModel(
-                title = "Body Sensors",
-                description = "Access body sensor data such as heart rate, blood oxygen, and other health-related information.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 1,
+                groupPermissionTitle = "Location",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Fine Location",
+                        description = "Access your precise location using GPS and location services.",
+                        permission = Manifest.permission.ACCESS_FINE_LOCATION,
+                        iconRes = R.drawable.ic_location_searching,
+                    ),
+                    PermissionModel(
+                        title = "Coarse Location",
+                        description = "Access your approximate location based on network and Wi-Fi information.",
+                        permission = Manifest.permission.ACCESS_COARSE_LOCATION,
+                        iconRes = R.drawable.ic_add_location,
+                    ),
+                    PermissionModel(
+                        title = "Background Location",
+                        description = "Allow the app to access your location even when the app is not in use.",
+                        permission = Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                        iconRes = R.drawable.ic_globe_location,
+                    ),
+                )
             ),
+
+            // Media Permissions
             RuntimePermissionModel(
-                title = "Body Sensors Background",
-                description = "Allow access to body sensor data while the app is running in the background.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 2,
+                groupPermissionTitle = "Media",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Photos & Videos",
+                        description = "Access and manage photos and videos stored on your device.",
+                        permission = Manifest.permission.READ_MEDIA_IMAGES,
+                        iconRes = R.drawable.ic_photo,
+                    ),
+                    PermissionModel(
+                        title = "Music & Audio",
+                        description = "Access and manage audio, music, and sound files stored on your device.",
+                        permission = Manifest.permission.READ_MEDIA_AUDIO,
+                        iconRes = R.drawable.ic_library_music,
+                    ),
+                )
             ),
+
+            // Communication Permissions
             RuntimePermissionModel(
-                title = "Calendar",
-                description = "Read, create, edit, and delete calendar events from your device.",
-                iconRes = R.drawable.ic_calendar_today,
+                id = 3,
+                groupPermissionTitle = "Communication",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Contacts",
+                        description = "Access, create, and update contacts stored on your device.",
+                        permission = Manifest.permission.READ_CONTACTS,
+                        iconRes = R.drawable.ic_contacts,
+                    ),
+                    PermissionModel(
+                        title = "Phone",
+                        description = "Access phone state and retrieve device phone information.",
+                        permission = Manifest.permission.READ_PHONE_STATE,
+                        iconRes = R.drawable.ic_contact_phone,
+                    ),
+                    PermissionModel(
+                        title = "Call Logs",
+                        description = "Read and manage your device call history.",
+                        permission = Manifest.permission.READ_CALL_LOG,
+                        iconRes = R.drawable.ic_call_log,
+                    ),
+                    PermissionModel(
+                        title = "SMS",
+                        description = "Read SMS and MMS messages on your device.",
+                        permission = Manifest.permission.READ_SMS,
+                        iconRes = R.drawable.ic_sms,
+                    ),
+                )
             ),
+
+            // Camera & Audio Permissions
             RuntimePermissionModel(
-                title = "Call Logs",
-                description = "Read and manage your device call history, including incoming and outgoing calls.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 4,
+                groupPermissionTitle = "Camera & Audio",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Camera",
+                        description = "Take photos, record videos, and scan QR codes.",
+                        permission = Manifest.permission.CAMERA,
+                        iconRes = R.drawable.ic_photo_camera,
+                    ),
+                    PermissionModel(
+                        title = "Microphone",
+                        description = "Record audio and voice input using your microphone.",
+                        permission = Manifest.permission.RECORD_AUDIO,
+                        iconRes = R.drawable.ic_microphone,
+                    ),
+                )
             ),
+
+            // Health & Fitness Permissions
             RuntimePermissionModel(
-                title = "Camera",
-                description = "Take photos, record videos, and scan QR or barcode using your device camera.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 5,
+                groupPermissionTitle = "Health & Fitness",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Body Sensors",
+                        description = "Access body sensor data such as heart rate.",
+                        permission = Manifest.permission.BODY_SENSORS,
+                        iconRes = R.drawable.ic_monitor_heart,
+                    ),
+                    PermissionModel(
+                        title = "Body Sensors Background",
+                        description = "Access body sensor data while app runs in background.",
+                        permission = Manifest.permission.BODY_SENSORS_BACKGROUND,
+                        iconRes = R.drawable.ic_monitor_heart,
+                    ),
+                    PermissionModel(
+                        title = "Physical Activity",
+                        description = "Track walking, running, cycling, and step counting.",
+                        permission = Manifest.permission.ACTIVITY_RECOGNITION,
+                        iconRes = R.drawable.ic_physical,
+                    ),
+                )
             ),
+
+            // Connectivity Permissions
             RuntimePermissionModel(
-                title = "Contacts",
-                description = "Access, create, and update contacts stored on your device.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 6,
+                groupPermissionTitle = "Connectivity",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Nearby Wi-Fi Devices",
+                        description = "Discover and connect to nearby Wi-Fi devices.",
+                        permission = Manifest.permission.NEARBY_WIFI_DEVICES,
+                        iconRes = R.drawable.ic_nearby_wifi,
+                    ),
+                    PermissionModel(
+                        title = "Bluetooth Connect",
+                        description = "Connect and communicate with Bluetooth devices.",
+                        permission = Manifest.permission.BLUETOOTH_CONNECT,
+                        iconRes = R.drawable.ic_nearby_bluetooth,
+                    ),
+                    PermissionModel(
+                        title = "Bluetooth Scan",
+                        description = "Scan nearby Bluetooth devices.",
+                        permission = Manifest.permission.BLUETOOTH_SCAN,
+                        iconRes = R.drawable.ic_nearby_bluetooth,
+                    ),
+                )
             ),
+
+            // Notification Permissions
             RuntimePermissionModel(
-                title = "Fine Location",
-                description = "Access your precise location using GPS and location services.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 7,
+                groupPermissionTitle = "Notifications",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Notifications",
+                        description = "Send and manage notifications on your device.",
+                        permission = Manifest.permission.POST_NOTIFICATIONS,
+                        iconRes = R.drawable.ic_notification,
+                    ),
+                )
             ),
+
+            // Calendar Permissions
             RuntimePermissionModel(
-                title = "Coarse Location",
-                description = "Access your approximate location based on network and Wi-Fi information.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Background Location",
-                description = "Allow the app to access your location even when the app is not in use.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Microphone",
-                description = "Record audio and voice input using your device microphone.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Nearby Wi-Fi Devices",
-                description = "Discover, connect, and communicate with nearby Wi-Fi enabled devices.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Nearby Bluetooth Devices",
-                description = "Scan, connect, and communicate with nearby Bluetooth devices.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Notifications",
-                description = "Send and manage push notifications and alerts on your device.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Phone",
-                description = "Access phone state, manage calls, and retrieve device-related phone information.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Physical Activity",
-                description = "Track physical activities such as walking, running, cycling, and step counting.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "SMS",
-                description = "Read, send, receive, and manage SMS or MMS messages on your device.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Storage",
-                description = "Read and manage files, documents, and media stored on your device.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Photos & Videos",
-                description = "Access and manage photos and videos stored on your device.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Music & Audio",
-                description = "Access and manage audio, music, and sound files stored on your device.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Manage External Storage",
-                description = "Allow broad access to manage all files and folders on external storage.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Record Screen",
-                description = "Capture and record your device screen activity and visual content.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Exact Alarm",
-                description = "Schedule exact alarms and time-sensitive notifications on the device.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Install Unknown Apps",
-                description = "Allow installation of applications from sources outside the Play Store.",
-                iconRes = R.drawable.ic_monitor_heart,
-            ),
-            RuntimePermissionModel(
-                title = "Picture in Picture",
-                description = "Display app content in a floating window while using other apps.",
-                iconRes = R.drawable.ic_monitor_heart,
+                id = 8,
+                groupPermissionTitle = "Calendar",
+                permissions = listOf(
+                    PermissionModel(
+                        title = "Calendar",
+                        description = "Read and manage calendar events.",
+                        permission = Manifest.permission.READ_CALENDAR,
+                        iconRes = R.drawable.ic_calendar_today,
+                    ),
+                )
             ),
         )
     }
