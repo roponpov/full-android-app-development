@@ -5,5 +5,5 @@
     <string name="runtime_permissions_description">Handle runtime permissions in Jetpack Compose to request and manage user access for features like camera, storage, and location. Ensure a smooth and secure user experience with proper permission handling.</string>
     <string name="aba_dashboard">ABA Dashboard</string>
     <string name="aba_dashboard_description">A static implementation of the ABA Mobile dashboard interface, showcasing account summaries, quick actions, and recent transaction layouts for learning and development purposes.</string>
-    <string name="profile_url">https://i.pinimg.com/736x/6a/bc/f8/6abcf84ac150893bfaad32730c3a99a8.jpg</string>
+    <string name="profile_url">https://media.licdn.com/dms/image/v2/D5603AQGdHM_FSTZ4Gw/profile-displayphoto-shrink_800_800/B56ZSIjXPKGsAg-/0/1737457760379?e=1781740800&amp;v=beta&amp;t=KQmf6ZPDcgBGtg9KAJKeuDPcgL4s7OwSkPWFkoJNkuQ</string>
 </resources>
