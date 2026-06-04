@@ -123,6 +123,7 @@ fun ABADashboardView(
 
 
     Scaffold(
+       containerColor = Color(0xFFE9E9E9),
         topBar = {
             Box(
                 modifier = Modifier
