@@ -13,36 +13,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,8 +51,8 @@ import kh.roponpov.fullandroidappdevelopment.R
 import kh.roponpov.fullandroidappdevelopment.core.navigation.AppNavigator
 import kh.roponpov.fullandroidappdevelopment.core.navigation.AppNavigatorImpl
 import kh.roponpov.fullandroidappdevelopment.core.ui.theme.FullAndroidAppDevelopmentTheme
+import kh.roponpov.fullandroidappdevelopment.core.utils.FrostedGlassBox
 import kh.roponpov.fullandroidappdevelopment.features.aba_dashboard.models.ShortcutFunctionModel
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ABADashboardView(
@@ -67,6 +61,7 @@ fun ABADashboardView(
     val listState = rememberLazyListState()
 
     val collapseRange = 120f
+//    val lazyColumnPaddingValue =
 
     val collapseProgress by remember {
         derivedStateOf {
@@ -77,6 +72,20 @@ fun ABADashboardView(
             (raw / collapseRange).coerceIn(0f, 1f)
         }
     }
+
+    val isBalanceCardHidden by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex > 0
+        }
+    }
+
+//    LaunchedEffect(isBalanceCardHidden) {
+//        if (isBalanceCardHidden) {
+//            // Balance Card is 100% hidden — do your thing here
+//        } else {
+//            // Balance Card is visible again
+//        }
+//    }
 
     val headerHeight = lerp(56.dp, 35.dp, collapseProgress)
     val textAlpha = 1f - collapseProgress
@@ -121,137 +130,135 @@ fun ABADashboardView(
     )
 
 
+    Box (
+        modifier = Modifier.fillMaxSize()
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.ic_background_theme),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
 
-    Scaffold(
-       containerColor = Color(0xFFE9E9E9),
-        topBar = {
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color(0xFFE9E9E9)
-                    )
-                    .padding(
-                        vertical = 16.dp,
-                        horizontal = 16.dp
-                    )
-                    .fillMaxWidth()
-                    .height(headerHeight)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Top
+        Scaffold(
+            containerColor = Color.Transparent,
+            topBar = {
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            vertical = 16.dp,
+                            horizontal = 16.dp
+                        )
+                        .windowInsetsPadding(WindowInsets.statusBars)
+                        .fillMaxWidth()
+                        .height(headerHeight)
                 ) {
-
-                    // Profile section
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Top
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(lerp(56.dp, 35.dp, collapseProgress))
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary)
+
+                        // Profile section
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                            AsyncImage(
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .border(
-                                        width = 2.dp,
-                                        shape = CircleShape,
-                                        color = MaterialTheme.colorScheme.error
-                                    ),
-                                model = stringResource(R.string.profile_url),
-                                contentDescription = null
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier.graphicsLayer {
-                                alpha = textAlpha
-                                scaleY = iconScale
+                                    .size(lerp(56.dp, 35.dp, collapseProgress))
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.primary)
+                            ) {
+                                AsyncImage(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .border(
+                                            width = 2.dp,
+                                            shape = CircleShape,
+                                            color = MaterialTheme.colorScheme.error
+                                        ),
+                                    model = stringResource(R.string.profile_url),
+                                    contentDescription = null
+                                )
                             }
+
+                            Column(
+                                modifier = Modifier.graphicsLayer {
+                                    alpha = textAlpha
+                                    scaleY = iconScale
+                                }
+                            ) {
+                                Text(
+                                    "Good afternoon!",
+                                    fontSize = lerp(16.sp, 10.sp, collapseProgress)
+                                )
+                                Text(
+                                    "Ropon Pov",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = lerp(18.sp, 12.sp, collapseProgress)
+                                )
+                            }
+                        }
+
+                        // right icons
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                            Text(
-                                "Good afternoon!",
-                                fontSize = lerp(16.sp, 10.sp, collapseProgress)
+                            Image(
+                                modifier = Modifier.size(25.dp),
+                                painter = painterResource(R.drawable.ic_messenger),
+                                contentDescription = "Messenger Icon"
                             )
-                            Text(
-                                "Ropon Pov",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = lerp(18.sp, 12.sp, collapseProgress)
+                            Image(
+                                modifier = Modifier.size(25.dp),
+                                painter = painterResource(R.drawable.ic_notification),
+                                contentDescription = "Notification Icon"
+                            )
+                            Image(
+                                modifier = Modifier.size(25.dp),
+                                painter = painterResource(R.drawable.ic_kh_qr),
+                                contentDescription = "KHQR Icon"
                             )
                         }
-                    }
-
-                    // right icons
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        Image(
-                            modifier = Modifier.size(25.dp),
-                            painter = painterResource(R.drawable.ic_messenger),
-                            contentDescription = "Messenger Icon"
-                        )
-                        Image(
-                            modifier = Modifier.size(25.dp),
-                            painter = painterResource(R.drawable.ic_notification),
-                            contentDescription = "Notification Icon"
-                        )
-                        Image(
-                            modifier = Modifier.size(25.dp),
-                            painter = painterResource(R.drawable.ic_kh_qr),
-                            contentDescription = "KHQR Icon"
-                        )
                     }
                 }
             }
-        }
-    ) { paddingValue ->
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .padding(paddingValue)
-                .fillMaxSize()
-                .clip(
-                    shape = RoundedCornerShape(
-                        topStart = 24.dp,
-                        topEnd = 24.dp
+        ) { paddingValue ->
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .padding(paddingValue)
+                    .fillMaxSize()
+                    .clip(
+                        shape = RoundedCornerShape(
+                            topStart = 24.dp,
+                            topEnd = 24.dp
+                        )
                     )
-                )
-        ) {
-            // TOP APP BAR
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = Color(0xFFE9E9E9),
-                            shape = RoundedCornerShape(
-                                bottomStart = 24.dp,
-                                bottomEnd = 24.dp,
-                            )
-                        )
-                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                        .clip(
-                            shape = RoundedCornerShape(
-                                topStart = 24.dp, topEnd = 24.dp
-                            )
-                        )
-                ) {
+            ) {
+                // TOP APP BAR
 
+                item {
                     // Balance Card
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.error,
-                                shape = RoundedCornerShape(24.dp),
-                            )
-                            .padding(16.dp)
+                            .padding(horizontal = 16.dp)
+                            .clip(RoundedCornerShape(24.dp))
                     ) {
-                        Column {
+                        Image(
+                            painter = painterResource(R.drawable.ic_balance_card_background),
+                            contentDescription = null,
+                            modifier = Modifier.matchParentSize(),
+                            contentScale = ContentScale.Crop
+                        )
+
+
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp)
+                        ) {
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
@@ -419,184 +426,259 @@ fun ABADashboardView(
 
                         }
                     }
+                }
 
 
-                    shortcutFunctions.chunked(2).forEach { rowItems ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                item {
+                    FrostedGlassBox(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = if (!isBalanceCardHidden) 0.dp else 0.dp,
+                            )
+                            .padding(
+                                bottom = 16.dp,
+                            ),
+                        overlayColor = Color.White.copy(alpha = 0.25f),
+                        shape = RoundedCornerShape(
+                            bottomStart = 24.dp,
+                            bottomEnd = 24.dp,
+                        )
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(
+                                bottom = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp,
+                            )
+
                         ) {
-                            rowItems.forEach { item ->
-                                Box(
+                            shortcutFunctions.chunked(2).forEach { rowItems ->
+                                Row(
                                     modifier = Modifier
-                                        .weight(1f)
-                                        .background(
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            shape = RoundedCornerShape(16.dp)
-                                        )
-                                        .padding(
-                                            vertical = 8.dp,
-                                            horizontal = 16.dp
-                                        )
+                                        .fillMaxWidth()
+                                        .padding(top = 16.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                                 ) {
-                                    Column(
-                                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                                    ) {
-                                        Image(
-                                            modifier = Modifier.size(35.dp),
-                                            painter = painterResource(item.icon),
-                                            contentDescription = item.label
-                                        )
+                                    rowItems.forEach { item ->
+                                        Box(
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .background(
+                                                    color = MaterialTheme.colorScheme.onPrimary,
+                                                    shape = RoundedCornerShape(16.dp)
+                                                )
+                                                .padding(
+                                                    vertical = 8.dp,
+                                                    horizontal = 16.dp
+                                                )
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                                            ) {
+                                                Image(
+                                                    modifier = Modifier.size(35.dp),
+                                                    painter = painterResource(item.icon),
+                                                    contentDescription = item.label
+                                                )
 
-                                        Text(
-                                            text = item.label,
-                                            style = MaterialTheme.typography.titleSmall,
-                                            fontWeight = FontWeight.Bold
-                                        )
+                                                Text(
+                                                    text = item.label,
+                                                    style = MaterialTheme.typography.titleSmall,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                    // Fill the second column if odd number of items
+                                    if (rowItems.size == 1) {
+                                        Spacer(modifier = Modifier.weight(1f))
                                     }
                                 }
                             }
 
-                            // Fill the second column if odd number of items
-                            if (rowItems.size == 1) {
-                                Spacer(modifier = Modifier.weight(1f))
+                            HorizontalDivider(
+                                modifier = Modifier.padding(vertical = 16.dp)
+                            )
+
+                            LazyRow(
+                                modifier = Modifier
+                                    .clip(
+                                        shape = RoundedCornerShape(16.dp)
+                                    ),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(rowFunctions.count()) {
+                                    val rowFunction = rowFunctions[it]
+
+                                    Box(
+                                        modifier = Modifier
+                                            .background(
+                                                color = MaterialTheme.colorScheme.onPrimary,
+                                                shape = RoundedCornerShape(16.dp)
+                                            )
+                                            .padding(
+                                                vertical = 12.dp,
+                                                horizontal = 20.dp,
+                                            )
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(
+                                                alignment = Alignment.CenterHorizontally,
+                                                space = 10.dp
+                                            )
+                                        ) {
+                                            Image(
+                                                modifier = Modifier.size(25.dp),
+                                                painter = painterResource(rowFunction.icon),
+                                                contentDescription = rowFunction.label
+                                            )
+                                            Text(
+                                                text = rowFunction.label,
+                                                style = MaterialTheme.typography.labelMedium
+                                            )
+                                        }
+                                    }
+                                }
                             }
-                        }
-                    }
-
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 16.dp)
-                    )
-
-                    LazyRow(
-                        modifier = Modifier
-                            .clip(
-                                shape = RoundedCornerShape(16.dp)
-                            ),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(rowFunctions.count()) {
-                            val rowFunction = rowFunctions[it]
 
                             Box(
                                 modifier = Modifier
-                                    .background(
-                                        color = MaterialTheme.colorScheme.onPrimary,
-                                        shape = RoundedCornerShape(16.dp)
-                                    )
-                                    .padding(
-                                        vertical = 12.dp,
-                                        horizontal = 20.dp,
-                                    )
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(
-                                        alignment = Alignment.CenterHorizontally,
-                                        space = 10.dp
-                                    )
-                                ) {
-                                    Image(
-                                        modifier = Modifier.size(25.dp),
-                                        painter = painterResource(rowFunction.icon),
-                                        contentDescription = rowFunction.label
-                                    )
-                                    Text(
-                                        text = rowFunction.label,
-                                        style = MaterialTheme.typography.labelMedium
-                                    )
-                                }
+                                HorizontalDivider(
+                                    modifier = Modifier
+                                        .width(80.dp)
+                                        .clip(
+                                            shape = MaterialTheme.shapes.large
+                                        ),
+                                    thickness = 5.dp
+                                )
                             }
                         }
                     }
+                }
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp),
-                        contentAlignment = Alignment.Center
+
+                item {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        HorizontalDivider(
-                            modifier = Modifier
-                                .width(80.dp)
-                                .clip(
-                                    shape = MaterialTheme.shapes.large
-                                ),
-                            thickness = 5.dp
+                        Text(
+                            text = "News & Promotions",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
                         )
+
+                        Box(
+                            modifier = Modifier
+                                .height(150.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                        ) {
+
+                        }
                     }
                 }
-            }
-
-
-            item {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "News & Promotions",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(24.dp)
-                            )
+                item {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        Text(
+                            text = "News & Promotions",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
 
+                        Box(
+                            modifier = Modifier
+                                .height(150.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                        ) {
+
+                        }
                     }
                 }
-            }
-            item {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "News & Promotions",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(24.dp)
-                            )
+                item {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        Text(
+                            text = "News & Promotions",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
 
+                        Box(
+                            modifier = Modifier
+                                .height(150.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                        ) {
+
+                        }
                     }
                 }
-            }
-            item {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "News & Promotions",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
 
-                    Box(
-                        modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(24.dp)
-                            )
+                item {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        Text(
+                            text = "News & Promotions",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
 
+                        Box(
+                            modifier = Modifier
+                                .height(150.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                        ) {
+
+                        }
+                    }
+                }
+
+                item {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "News & Promotions",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .height(150.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                        ) {
+
+                        }
                     }
                 }
             }

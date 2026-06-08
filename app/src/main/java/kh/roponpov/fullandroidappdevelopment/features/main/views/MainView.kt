@@ -1,5 +1,6 @@
 package kh.roponpov.fullandroidappdevelopment.features.main.views
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ fun MainScreen() {
     val navigator = remember { AppNavigatorImpl(navController) }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             BottomBar(navigator, navController)
         }
